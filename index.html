@@ -3,93 +3,574 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DTECH Termux Tools</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --secondary: #10b981;
+      --accent: #f59e0b;
+      --dark: #0f172a;
+      --darker: #020617;
+    }
 
-  <!-- SEO Metadata -->
-  <title>What is DTECH? | Digital Student Ecosystem by Preasx24</title>
-  <meta name="description" content="DTECH is a youth-driven digital ecosystem founded by Preasx24. It provides free platforms for students to learn, earn, connect, and grow through marketplaces, study tools, AI bots, and university guidance." />
-  <meta name="keywords" content="DTECH, What is DTECH, DTECH Services, student tech, student marketplace, APS calculator, study resources, past papers, DTECH Info, DTECH HQ, DTECH Uni, South Africa" />
-  <meta name="author" content="Preasx24" />
-  <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://dtech24.co.za/about" />
+    body {
+      background: linear-gradient(to bottom right, var(--darker), var(--dark));
+      min-height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="What is DTECH? | Built by Preasx24" />
-  <meta property="og:description" content="DTECH is a tech ecosystem created by Preasx24 to support South African students with tools for study, selling, rentals, AI Q&A, and career decisions." />
-  <meta property="og:image" content="https://dtech24.co.za/images/dtech-logo.png" />
-  <meta property="og:url" content="https://dtech24.co.za/about" />
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="DTECH Ecosystem" />
+    .glow {
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.7);
+      transition: all 0.3s ease;
+    }
 
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="What is DTECH?" />
-  <meta name="twitter:description" content="Discover DTECH – a digital-first platform network helping students rent, resell, learn, and prepare for university success." />
-  <meta name="twitter:image" content="https://dtech24.co.za/images/dtech-logo.png" />
+    .glow:hover {
+      box-shadow: 0 0 25px rgba(59, 130, 246, 0.9);
+    }
 
-  <!-- JSON-LD Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "DTECH",
-    "url": "https://dtech24.co.za",
-    "founder": {
-      "@type": "Person",
-      "name": "Preasx24",
-      "url": "https://preasx24.co.za"
-    },
-    "description": "DTECH is a multi-branch digital ecosystem built by Preasx24 to empower students in South Africa through study tools, selling platforms, rental systems, and eligibility calculators.",
-    "logo": "https://dtech24.co.za/images/dtech-logo.png",
-    "sameAs": [
-      "https://dtech-services.co.za",
-      "https://info.dtech24.co.za",
-      "https://uni.dtech24.co.za",
-      "https://www.instagram.com/preasx24",
-      "https://github.com/dtech2preas"
-    ],
-    "department": [
-      {
-        "@type": "Organization",
-        "name": "DTECH Services",
-        "url": "https://dtech-services.co.za",
-        "description": "A rental and resale platform for students with ID verification and smart login."
-      },
-      {
-        "@type": "Organization",
-        "name": "DTECH Info",
-        "url": "https://info.dtech24.co.za",
-        "description": "Student guide and Q&A hub covering NSFAS, accommodation, courses, and more."
-      },
-      {
-        "@type": "Organization",
-        "name": "DTECH HQ",
-        "url": "https://dtech24.co.za",
-        "description": "Innovation and utility platform with bots, AI, downloads, scripts, and automation."
-      },
-      {
-        "@type": "Organization",
-        "name": "DTECH Uni",
-        "url": "https://uni.dtech24.co.za",
-        "description": "University eligibility tool using APS requirements for SA universities."
-      }
-    ]
-  }
-  </script>
+    .tool-card {
+      transition: all 0.3s ease;
+      background: linear-gradient(145deg, #1e293b, #0f172a);
+      border-radius: 12px;
+      overflow: hidden;
+      border-left: 4px solid var(--primary);
+    }
+
+    .tool-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+    }
+
+    .neon-text {
+      text-shadow: 0 0 8px rgba(59, 130, 246, 0.7);
+    }
+
+    .command-box {
+      background: rgba(15, 23, 42, 0.7);
+      border-left: 3px solid var(--accent);
+    }
+
+    .copy-btn {
+      transition: all 0.2s ease;
+    }
+
+    .copy-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .copy-btn.copied {
+      background-color: var(--secondary) !important;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .floating {
+      animation: float 3s ease-in-out infinite;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #3b82f6;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #60a5fa;
+    }
+  </style>
 </head>
-<body>
-  <main>
-    <h1>What is DTECH?</h1>
+<body class="text-gray-200">
+  <!-- Floating Support Button -->
+  <a href="https://cafewarriors.com/spymr251ew?key=ce76edf7e5c6e4907177e712dc143365" 
+     class="fixed top-4 right-4 z-50 bg-gradient-to-r from-blue-600 to-blue-400 text-white px-4 py-2 rounded-full shadow-lg glow flex items-center hover:scale-105 transition-transform">
+    <i class="fas fa-heart mr-2"></i> Support Us
+  </a>
 
-    <p style="opacity: 0.01; font-size: 0.1rem;">
-      DTECH is a student-first tech brand founded by Preasx24, operating several sub-platforms for youth empowerment: DTECH Services (marketplace), DTECH Info (Q&A and student help), DTECH HQ (utilities and bots), and DTECH Uni (APS estimator). It uses GitHub Pages, JSON search, local storage, and CI/CD techniques for efficient, fast, and no-backend deployments.
-    </p>
+  <!-- Header -->
+  <header class="bg-gradient-to-r from-blue-900 to-blue-700 text-white p-6 shadow-xl">
+    <div class="container mx-auto flex items-center">
+      <img src="logo.png" alt="DTECH Logo" class="h-16 w-16 rounded-full bg-white p-1 border-4 border-blue-400 shadow-lg floating mr-4">
+      <div>
+        <h1 class="text-4xl font-extrabold tracking-tight neon-text">DTECH Termux Tools</h1>
+        <p class="text-blue-200 italic">Ultimate collection of hacking & security tools</p>
+      </div>
+    </div>
+  </header>
 
-    <p style="display: none;">
-      DTECH empowers South African students by giving access to tools that help them study better, earn on the side, understand university admission, and build their own platforms — all for free.
-    </p>
+  <!-- Main Content -->
+  <main class="container mx-auto px-4 py-8">
+    <!-- Featured Tools Section -->
+    <section class="mb-12">
+      <h2 class="text-3xl font-bold mb-6 gradient-text flex items-center">
+        <i class="fas fa-fire mr-3"></i> Termux Tools Collection
+      </h2>
 
-    <p>DTECH is not just one website — it’s a growing system. <br />
-    Built by <strong>Preasx24</strong>, for students like you.</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Termux initial requirements Tool Card -->
+<div class="tool-card group relative overflow-hidden shadow-xl">
+  <div class="absolute inset-0 bg-gradient-to-br from-amber-600 to-red-800 opacity-20 group-hover:opacity-30 transition"></div>
+  <div class="relative p-6">
+    <div class="flex items-center mb-4">
+      <div class="bg-amber-600 p-3 rounded-lg mr-4">
+        <i class="fas fa-database text-2xl"></i>
+      </div>
+      <h3 class="text-xl font-bold">Termux initial requirements</h3>
+    </div>
+    <p class="text-gray-300 mb-4">commands you should excute right after downloading termux (very important)</p>
+
+    <div class="mb-4">
+      <label class="text-sm text-blue-300 mb-1 block">Installation:</label>
+      <div class="command-box p-3 rounded mb-2 flex justify-between items-center">
+        <code class="text-green-400">pkg update && pkg upgrade -y</code>
+        <button class="copy-btn bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm" data-cmd="pkg update && pkg upgrade -y">
+          <i class="far fa-copy"></i>
+        </button>
+      </div>
+      <div class="command-box p-3 rounded mb-2 flex justify-between items-center">
+        <code class="text-green-400">pkg install python git curl wget -y</code>
+        <button class="copy-btn bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm" data-cmd="pkg install python git curl wget -y">
+          <i class="far fa-copy"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="flex justify-between mt-6">
+      <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded glow flex items-center" onclick="window.open('https://cafewarriors.com/spymr251ew?key=ce76edf7e5c6e4907177e712dc143365','_blank')">
+        <i class="fas fa-info-circle mr-2"></i> More Info
+      </button>
+      <button class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded glow flex items-center" onclick="window.open('https://youtube.com/shorts/x_wMwxZbwMo?si=VsCiC4Qof0Ziw2gW','_blank')">
+        <i class="fab fa-youtube mr-2"></i> Tutorial
+      </button>
+    </div>
+  </div>
+</div>
+
+        <!-- DTECH URL VIDEO DOWNLOADER Tool Card -->
+<div class="tool-card group relative overflow-hidden shadow-xl">
+  <div class="absolute inset-0 bg-gradient-to-br from-amber-600 to-red-800 opacity-20 group-hover:opacity-30 transition"></div>
+  <div class="relative p-6">
+    <div class="flex items-center mb-4">
+      <div class="bg-amber-600 p-3 rounded-lg mr-4">
+        <i class="fas fa-database text-2xl"></i>
+      </div>
+      <h3 class="text-xl font-bold">DTECH URL VIDEO DOWNLOADER</h3>
+    </div>
+    <p class="text-gray-300 mb-4">this tools lets you download any kind of video from any type of url (tik tok ,facebook,youtube,instagram and any other site)</p>
+
+    <div class="mb-4">
+      <label class="text-sm text-green-300 mb-1 block">Installation:</label>
+      <div class="command-box p-3 rounded mb-2 flex justify-between items-center">
+        <code class="text-green-400">curl -o load.py https://raw.githubusercontent.com/x24em/Dtech/e9105ff06335482fa1f52711128d685b40c22b0d/load.py</code>
+        <button class="copy-btn bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm" data-cmd="curl -o load.py https://raw.githubusercontent.com/x24em/Dtech/e9105ff06335482fa1f52711128d685b40c22b0d/load.py">
+          <i class="far fa-copy"></i>
+        </button>
+      </div>
+      <div class="command-box p-3 rounded mb-2 flex justify-between items-center">
+        <code class="text-green-400">python load.py</code>
+        <button class="copy-btn bg-green-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm" data-cmd="python load.py">
+          <i class="far fa-copy"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="flex justify-between mt-6">
+      <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded glow flex items-center" onclick="window.open('https://cafewarriors.com/spymr251ew?key=ce76edf7e5c6e4907177e712dc143365','_blank')">
+        <i class="fas fa-info-circle mr-2"></i> More Info
+      </button>
+      <button class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded glow flex items-center" onclick="window.open('https://drive.google.com/file/d/1anXK0dNX-hg-kZqnuT2KCGQRuqHd7g_k/view?usp=drivesdk','_blank')">
+        <i class="fab fa-youtube mr-2"></i> Tutorial
+      </button>
+    </div>
+  </div>
+</div>
+
+        <!-- SNI HOST TESTER Tool Card -->
+<div class="tool-card group relative overflow-hidden shadow-xl">
+  <div class="absolute inset-0 bg-gradient-to-br from-amber-600 to-red-800 opacity-20 group-hover:opacity-30 transition"></div>
+  <div class="relative p-6">
+    <div class="flex items-center mb-4">
+      <div class="bg-amber-600 p-3 rounded-lg mr-4">
+        <i class="fas fa-database text-2xl"></i>
+      </div>
+      <h3 class="text-xl font-bold">SNI HOST TESTER</h3>
+    </div>
+    <p class="text-gray-300 mb-4">test host and give you a detail report , good for looking for zero rated sites</p>
+
+    <div class="mb-4">
+      <label class="text-sm text-blue-300 mb-1 block">Installation:</label>
+      <div class="command-box p-3 rounded mb-2 flex justify-between items-center">
+        <code class="text-green-400">pip install requests colorama
+pkg install openssl
+pkg install clang</code>
+        <button class="copy-btn bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm" data-cmd="pip install requests colorama
+pkg install openssl
+pkg install clang">
+          <i class="far fa-copy"></i>
+        </button>
+      </div>
+      <div class="command-box p-3 rounded mb-2 flex justify-between items-center">
+        <code class="text-green-400">curl -o sni.py https://raw.githubusercontent.com/Dtech2preas/100mb/main/sni.py</code>
+        <button class="copy-btn bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm" data-cmd="curl -o sni.py https://raw.githubusercontent.com/Dtech2preas/100mb/main/sni.py">
+          <i class="far fa-copy"></i>
+        </button>
+      </div>
+      <div class="command-box p-3 rounded mb-2 flex justify-between items-center">
+        <code class="text-green-400">python sni.py</code>
+        <button class="copy-btn bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm" data-cmd="python sni.py">
+          <i class="far fa-copy"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="flex justify-between mt-6">
+      <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded glow flex items-center" onclick="window.open('https://www.preasx24.co.za/more-info.html','_blank')">
+        <i class="fas fa-info-circle mr-2"></i> More Info
+      </button>
+      <button class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded glow flex items-center" onclick="window.open('https://drive.google.com/file/d/1bIHGwB-2SrV6WwPR1d5jYBJc2rvRRV5M/view?usp=drivesdk','_blank')">
+        <i class="fab fa-youtube mr-2"></i> Tutorial
+      </button>
+    </div>
+  </div>
+</div>
+
+        <!-- neo fetch Tool Card -->
+<div class="tool-card group relative overflow-hidden shadow-xl">
+  <div class="absolute inset-0 bg-gradient-to-br from-amber-600 to-red-800 opacity-20 group-hover:opacity-30 transition"></div>
+  <div class="relative p-6">
+    <div class="flex items-center mb-4">
+      <div class="bg-amber-600 p-3 rounded-lg mr-4">
+        <i class="fas fa-database text-2xl"></i>
+      </div>
+      <h3 class="text-xl font-bold">neo fetch</h3>
+    </div>
+    <p class="text-gray-300 mb-4">show your system infoo</p>
+
+    <div class="mb-4">
+      <label class="text-sm text-blue-300 mb-1 block">Installation:</label>
+      <div class="command-box p-3 rounded mb-2 flex justify-between items-center">
+        <code class="text-green-400">pkg install neofetch -y</code>
+        <button class="copy-btn bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm" data-cmd="pkg install neofetch -y">
+          <i class="far fa-copy"></i>
+        </button>
+      </div>
+      <div class="command-box p-3 rounded mb-2 flex justify-between items-center">
+        <code class="text-green-400">neofetch</code>
+        <button class="copy-btn bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm" data-cmd="neofetchneofetch">
+          <i class="far fa-copy"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="flex justify-between mt-6">
+      <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded glow flex items-center" onclick="window.open('https://www.preasx24.co.za/more-info.html','_blank')">
+        <i class="fas fa-info-circle mr-2"></i> More Info
+      </button>
+      <button class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded glow flex items-center" onclick="window.open('https://drive.google.com/file/d/1g0nB85EJVqOFI8Mcr5dbl5hii8Y22RyZ/view?usp=drivesdk','_blank')">
+        <i class="fab fa-youtube mr-2"></i> Tutorial
+      </button>
+    </div>
+  </div>
+</div>
+
+        <!-- account extract Tool Card -->
+<div class="tool-card group relative overflow-hidden shadow-xl">
+  <div class="absolute inset-0 bg-gradient-to-br from-amber-600 to-red-800 opacity-20 group-hover:opacity-30 transition"></div>
+  <div class="relative p-6">
+    <div class="flex items-center mb-4">
+      <div class="bg-amber-600 p-3 rounded-lg mr-4">
+        <i class="fas fa-database text-2xl"></i>
+      </div>
+      <h3 class="text-xl font-bold">account extract</h3>
+    </div>
+    <p class="text-gray-300 mb-4">lets you extract email:password combinations from a txt file</p>
+
+    <!-- ✅ Replaced command box with button -->
+    <div class="mb-4">
+      <label class="text-sm text-blue-300 mb-1 block">Tool Link:</label>
+      <button 
+        onclick="window.open('https://ext.dtech24.co.za', '_blank')" 
+        class="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-sm flex items-center justify-center">
+        <i class="fas fa-external-link-alt mr-2"></i> Open Tool
+      </button>
+    </div>
+
+    <div class="flex justify-between mt-6">
+      <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded glow flex items-center" onclick="window.open('https://cafewarriors.com/spymr251ew?key=ce76edf7e5c6e4907177e712dc143365','_blank')">
+        <i class="fas fa-info-circle mr-2"></i> More Info
+      </button>
+      <button class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded glow flex items-center" onclick="window.open('https://drive.google.com/file/d/1fuXwpD60DjBAqW4rotwdex_o54JrtdB1/view?usp=drivesdk','_blank')">
+        <i class="fab fa-youtube mr-2"></i> Tutorial
+      </button>
+    </div>
+  </div>
+</div>
+
+        <!-- web host tester Tool Card -->
+<div class="tool-card group relative overflow-hidden shadow-xl">
+  <div class="absolute inset-0 bg-gradient-to-br from-amber-600 to-red-800 opacity-20 group-hover:opacity-30 transition"></div>
+  <div class="relative p-6">
+    <div class="flex items-center mb-4">
+      <div class="bg-amber-600 p-3 rounded-lg mr-4">
+        <i class="fas fa-database text-2xl"></i>
+      </div>
+      <h3 class="text-xl font-bold">web host tester</h3>
+    </div>
+    <p class="text-gray-300 mb-4">lets you test host via API</p>
+
+    <!-- ✅ Replaced command box with button -->
+    <div class="mb-4">
+      <label class="text-sm text-blue-300 mb-1 block">Tool Link:</label>
+      <button 
+        onclick="window.open('https://host.dtech24.co.za', '_blank')" 
+        class="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-sm flex items-center justify-center">
+        <i class="fas fa-external-link-alt mr-2"></i> Open Tool
+      </button>
+    </div>
+
+    <div class="flex justify-between mt-6">
+      <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded glow flex items-center" onclick="window.open('https://cafewarriors.com/spymr251ew?key=ce76edf7e5c6e4907177e712dc143365','_blank')">
+        <i class="fas fa-info-circle mr-2"></i> More Info
+      </button>
+      <button class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded glow flex items-center" onclick="window.open('https://drive.google.com/file/d/1fvjyvrhkKYe79QC-hkPedIxjfmZvZ-kz/view?usp=drivesdk','_blank')">
+        <i class="fab fa-youtube mr-2"></i> Tutorial
+      </button>
+    </div>
+  </div>
+</div>
+
+      </div>
+    </section>
   </main>
+
+  <!-- Footer -->
+  <footer class="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-8 mt-12">
+    <div class="container mx-auto px-4 text-center">
+      <div class="mb-6">
+        <div class="flex items-center justify-center">
+          <img src="logo.png" alt="DTECH Logo" class="h-12 w-12 rounded-full bg-white p-1 border-2 border-blue-400 mr-3">
+          <h2 class="text-2xl font-bold">DTECH Termux Tools</h2>
+        </div>
+        <p class="text-blue-200 mt-2">Empowering ethical hackers and security researchers</p>
+      </div>
+
+      <div class="border-t border-blue-700 pt-6 text-blue-300">
+        <p>© 2025 DTECH Termux Tools. All rights reserved. | Powered by Preasx24</p>
+        <p class="text-sm mt-2">For educational purposes only. Use responsibly.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Tool Details Modal -->
+  <div id="toolModal" class="fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center hidden">
+    <div class="bg-gray-900 rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto relative" style="border: 2px solid #3b82f6;">
+      <button id="closeModal" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl">
+        <i class="fas fa-times"></i>
+      </button>
+
+      <div class="p-6">
+        <div class="flex items-center mb-6">
+          <div id="modalIcon" class="bg-blue-600 p-4 rounded-lg mr-4">
+            <i class="fas fa-toolbox text-3xl"></i>
+          </div>
+          <h2 id="modalTitle" class="text-2xl font-bold gradient-text">Tool Name</h2>
+        </div>
+
+        <div class="mb-6">
+          <h3 class="text-xl font-semibold mb-2 text-blue-300">Description</h3>
+          <p id="modalDescription" class="text-gray-300">Tool description goes here with detailed information about its functionality and use cases.</p>
+        </div>
+
+        <div class="mb-6">
+          <h3 class="text-xl font-semibold mb-2 text-blue-300">Installation</h3>
+          <div class="command-box p-3 rounded mb-2 flex justify-between items-center">
+            <code id="modalInstallCmd" class="text-green-400">pkg install tool-name</code>
+            <button class="copy-btn bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm" 
+                    data-cmd="pkg install tool-name">
+              <i class="far fa-copy"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <h3 class="text-xl font-semibold mb-2 text-blue-300">Basic Usage</h3>
+          <div class="space-y-3">
+            <div>
+              <label class="text-sm text-blue-300 mb-1 block">Command 1:</label>
+              <div class="command-box p-3 rounded mb-2 flex justify-between items-center">
+                <code class="text-green-400">tool-name --option</code>
+                <button class="copy-btn bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm" 
+                        data-cmd="tool-name --option">
+                  <i class="far fa-copy"></i>
+                </button>
+              </div>
+            </div>
+            <div>
+              <label class="text-sm text-blue-300 mb-1 block">Command 2:</label>
+              <div class="command-box p-3 rounded mb-2 flex justify-between items-center">
+                <code class="text-green-400">tool-name --another-option</code>
+                <button class="copy-btn bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm" 
+                        data-cmd="tool-name --another-option">
+                  <i class="far fa-copy"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <h3 class="text-xl font-semibold mb-2 text-blue-300">Video Tutorial</h3>
+          <div class="aspect-w-16 aspect-h-9 bg-gray-800 rounded-lg overflow-hidden">
+            <iframe id="modalVideo" class="w-full h-64" src="https://www.youtube.com/embed/" frameborder="0" allowfullscreen></iframe>
+          </div>
+        </div>
+
+        <div class="flex justify-center">
+          <button class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded glow flex items-center"
+                  id="modalTutorialBtn">
+            <i class="fab fa-youtube mr-2"></i> Watch Full Tutorial
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Copy command functionality
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const cmd = this.getAttribute('data-cmd');
+        navigator.clipboard.writeText(cmd).then(() => {
+          // Visual feedback
+          this.innerHTML = '<i class="fas fa-check"></i>';
+          this.classList.add('copied');
+          setTimeout(() => {
+            this.innerHTML = '<i class="far fa-copy"></i>';
+            this.classList.remove('copied');
+          }, 2000);
+        });
+      });
+    });
+
+    // Modal functionality
+    const modal = document.getElementById('toolModal');
+    const closeModal = document.getElementById('closeModal');
+
+    // Close modal
+    closeModal.addEventListener('click', () => {
+      modal.classList.add('hidden');
+    });
+
+    // Close when clicking outside
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.add('hidden');
+      }
+    });
+
+    // Example of opening modal (would be connected to your "More Info" buttons)
+    function openToolModal(toolData) {
+      // This would be populated with actual tool data
+      document.getElementById('modalTitle').textContent = toolData.name;
+      document.getElementById('modalDescription').textContent = toolData.description;
+      document.getElementById('modalInstallCmd').textContent = toolData.installCmd;
+      document.getElementById('modalVideo').src = `https://www.youtube.com/embed/${toolData.videoId}`;
+      document.getElementById('modalTutorialBtn').onclick = () => window.open(toolData.videoUrl, '_blank');
+
+      // Set icon based on category
+      const icon = document.getElementById('modalIcon');
+      icon.className = `p-4 rounded-lg mr-4 ${toolData.iconColor}`;
+      icon.innerHTML = `<i class="${toolData.iconClass} text-3xl"></i>`;
+
+      modal.classList.remove('hidden');
+    }
+  </script>
+
+<style>
+#ad-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.6); /* semi-transparent dark background */
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-family: sans-serif;
+  z-index: 9999;
+  cursor: pointer;
+  text-align: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+</style>
+
+<div id="ad-layer" style="display: none;">
+  👆 Tap to Continue<br><small>(Ad will open once per hour)</small>
+</div>
+
+<script>
+const directLink = "https://otieu.com/4/9515888";
+const layer = document.getElementById("ad-layer");
+
+// Check if it's time to show the layer
+function checkAndShowLayer() {
+  const lastClick = localStorage.getItem("direct_ad_last_click");
+  const now = Date.now();
+
+  if (!lastClick || (now - parseInt(lastClick)) > 3600000) {
+    layer.style.display = "flex";
+  }
+}
+
+// Handle click to open ad
+layer.addEventListener("click", () => {
+  const now = Date.now();
+  const lastClick = localStorage.getItem("direct_ad_last_click");
+
+  // Make sure it's allowed
+  if (!lastClick || (now - parseInt(lastClick)) > 3600000) {
+    window.open(directLink, "_blank");
+    localStorage.setItem("direct_ad_last_click", now);
+  }
+
+  // Hide the layer immediately
+  layer.style.display = "none";
+
+  // Schedule it to reappear in 1 hour
+  setTimeout(() => {
+    layer.style.display = "flex";
+  }, 3600000);
+});
+
+// Check on load
+checkAndShowLayer();
+
+// Check again every 10 minutes in case page stays open
+setInterval(checkAndShowLayer, 600000);
+</script>
+
 </body>
 </html>
