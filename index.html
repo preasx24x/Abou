@@ -369,46 +369,52 @@ pkg install clang">
       </div>
       <h3 class="text-xl font-bold">DTECH WEB APK BUILDER</h3>
     </div>
-    <p class="text-gray-300 mb-4">Turn Any Website Into an Android App — Paste a link. Get a ready-to-install APK. No coding, no stress — built automatically with GitHub. ✔️ Built-in pop-up ad blocker ✔️ Fast, lightweight & clean (no heavy resources) ✔️ Your favorite sites as real apps 💥 Coming Soon with WebViewForge 💥</p>
+    <p class="text-gray-300 mb-4">Turn Any Website Into an Android App — Paste a link. Get a ready-to-install APK. No coding, no stress — built automatically with GitHub. ✔️ Built-in pop-up ad blocker ✔️ Fast, lightweight & clean ✔️ Your favorite sites as real apps 💥 Coming Soon with WebViewForge 💥</p>
 
     <div class="mb-4">
       <label class="text-sm text-blue-300 mb-1 block">Installation:</label>
+
+      <!-- Combined base installs -->
       <div class="command-box p-3 rounded mb-2 flex justify-between items-center">
-        <code class="text-green-400">pkg update -y && pkg upgrade -y && pkg install -y gh curl</code>
-        <button class="copy-btn bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm" data-cmd="pkg update -y && pkg upgrade -y && pkg install -y gh curl">
+        <code class="text-green-400">pkg update -y && pkg upgrade -y && pkg install -y git curl gh python termux-api</code>
+        <button class="copy-btn bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm" data-cmd="pkg update -y && pkg upgrade -y && pkg install -y git curl gh python termux-api">
           <i class="far fa-copy"></i>
         </button>
       </div>
-      <div class="command-box p-3 rounded mb-2 flex justify-between items-center">
-        <code class="text-green-400">pkg install git</code>
-        <button class="copy-btn bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm" data-cmd="pkg install git">
-          <i class="far fa-copy"></i>
-        </button>
-      </div>
-      <div class="command-box p-3 rounded mb-2 flex justify-between items-center">
-        <code class="text-green-400">pkg install termux-api</code>
-        <button class="copy-btn bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm" data-cmd="pkg install termux-api">
-          <i class="far fa-copy"></i>
-        </button>
-      </div>
+
+      <!-- Python pip dependencies -->
       <div class="command-box p-3 rounded mb-2 flex justify-between items-center">
         <code class="text-green-400">pip install colorama pyfiglet halo requests</code>
         <button class="copy-btn bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm" data-cmd="pip install colorama pyfiglet halo requests">
           <i class="far fa-copy"></i>
         </button>
       </div>
+
+      <!-- Export browser setting -->
       <div class="command-box p-3 rounded mb-2 flex justify-between items-center">
-        <code class="text-green-400">pkg install python</code>
-        <button class="copy-btn bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm" data-cmd="pkg install python">
+        <code class="text-green-400">echo 'export BROWSER="termux-open-url"' >> ~/.bashrc</code>
+        <button class="copy-btn bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm" data-cmd="echo 'export BROWSER=&quot;termux-open-url&quot;' >> ~/.bashrc">
           <i class="far fa-copy"></i>
         </button>
       </div>
+
+      <!-- Apply new bashrc -->
+      <div class="command-box p-3 rounded mb-2 flex justify-between items-center">
+        <code class="text-green-400">source ~/.bashrc</code>
+        <button class="copy-btn bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm" data-cmd="source ~/.bashrc">
+          <i class="far fa-copy"></i>
+        </button>
+      </div>
+
+      <!-- Download script -->
       <div class="command-box p-3 rounded mb-2 flex justify-between items-center">
         <code class="text-green-400">curl -o apk.py https://raw.githubusercontent.com/preasx24x/PREASX24/main/apk.py</code>
         <button class="copy-btn bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm" data-cmd="curl -o apk.py https://raw.githubusercontent.com/preasx24x/PREASX24/main/apk.py">
           <i class="far fa-copy"></i>
         </button>
       </div>
+
+      <!-- Run the builder -->
       <div class="command-box p-3 rounded mb-2 flex justify-between items-center">
         <code class="text-green-400">python apk.py</code>
         <button class="copy-btn bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm" data-cmd="python apk.py">
@@ -416,6 +422,8 @@ pkg install clang">
         </button>
       </div>
     </div>
+  </div>
+</div>
 
     <div class="flex justify-between mt-6">
       <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded glow flex items-center" onclick="window.open('https://www.preasx24.co.za/more-info.html','_blank')">
